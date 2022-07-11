@@ -14,7 +14,7 @@ const ResidentInfo = ({ location }) => {
     console.log(residentInfo)
     return (
         <div className='col-6 col-md-4 card-df'>
-            <p>{residentInfo.status == "Alive" ? <div className='green'>Vivo</div> : residentInfo.status == "Dead" ? <div className='red'>Muerto</div> : <div className='sub-text'>No info</div>}</p>
+            <p>{residentInfo.status == "Alive" ? <div className='green'>Alive</div> : residentInfo.status == "Dead" ? <div className='red'>Dead</div> : <div className='sub-text'>No info</div>}</p>
             <img src={residentInfo.image} alt="" />
             <h3>{residentInfo.name}</h3>
             <h5><div className='sub-text'>Type</div>{residentInfo.species}</h5>
