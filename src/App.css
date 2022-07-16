@@ -42,6 +42,11 @@ body{
   margin: 50px;
   width:fit-content;
   border-radius: 20px;
+  box-shadow: 2px 8px 20px 5px black;
+  transition: 0.2s;
+}
+.card-df:hover{
+  box-shadow: 2px 8px 15px 3px black;
 }
 .card-df p{
   margin-top: 15px;
@@ -78,4 +83,28 @@ body{
 }
 .red{
   color: rgb(197, 33, 33);
+}
+.pagination{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.pagination *{
+  border-radius: 8px;
+  background-color:#051a1d;
+  color: white;
+  border: 1px solid #062226;
+  padding: 2px 10px;
+  margin: 0px 2px;
+}
+.pagination *:hover{
+  background-color: #092b31;
+  border: 0.5px solid white;
+}
+.searchItem{
+  color:gray;
+  text-decoration: none;
+}
+.searchItem:hover{
+  color: #041518;
 }

@@ -21,7 +21,6 @@ const ResidentInfo = ({ location }) => {
             <h5><div className='sub-text'>Origin</div>{residentInfo.origin?.name}</h5>
             <h5><div className='sub-text'>Episodes where appear</div>{residentInfo.episode?.length}</h5>
         </div>
-        //no me actualiza, siempre salen los mismos personajes, probable error en use effect.
     );
 };
 

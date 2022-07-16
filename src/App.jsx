@@ -10,9 +10,8 @@ function App() {
   const [location, setLocation] = useState({})
   const [idInput, setIdInput] = useState("")
 
-  const random = Math.floor(Math.random() * 126) + 1;
   useEffect(() => {
-    axios.get(`https://rickandmortyapi.com/api/location/${random}`)
+    axios.get(`https://rickandmortyapi.com/api/location/1`)
       .then(res => setLocation(res.data))
   }, [])
 
@@ -20,6 +19,33 @@ function App() {
     axios.get(`https://rickandmortyapi.com/api/location/${idInput}`)
       .then(res => setLocation(res.data))
   }
+  //PAGINACION
+  const [page, setPage] = useState(1)
+  const lastIndex = page*6;
+  const firstIndex = lastIndex - 6;
+  const peoplePaginated = location.residents?.slice(firstIndex, lastIndex)
+  const lastPage= Math.ceil(location.residents?.length/6);
+
+  const numbers = [];
+  for(let i = 1; i <=lastPage; i++){
+    numbers.push(i);
+  }
+
+
+  //BUSCADOR
+  //cada vez que cambie idInput por que es el estado que le dimos al value del input
+  //para eso usamos el useffect y metemos idinput en dependencias
+  const [locationSuggestion, setLocationSuggestion] = useState([]);
+  useEffect(() => {
+    // alert("cambio idinput")
+    if(idInput !== ""){
+      axios.get(`https://rickandmortyapi.com/api/location/?name=${idInput}`)
+      .then(res => setLocationSuggestion(res.data.results))
+    }else{
+      setLocationSuggestion([]);
+    }
+  }, [idInput])
+
 
   return (
     <div className="App">
@@ -28,19 +54,31 @@ function App() {
           <input
             value={idInput}
             onChange={e => setIdInput(e.target.value)}
-            type="number" className="form-control"
-            placeholder="Type a Location id"
+            type="text" className="form-control"
+            placeholder="Type a location name"
             aria-describedby="button-addon2" />
-          <button onClick={() => getLocation()}
-            className="btn btn-outline-success"
-            type="button" id="button-addon2">
-            Find
-          </button>
         </div>
       </div>
+      {locationSuggestion.map(location => (
+        <div className='searchContainer'>
+            <a href='#' className='searchItem' onClick={() =>setLocation(location)}>{location.name}</a>
+        </div>
+          ))}
       <Location location={location} />
+      <div className='pagination'>
+          <button onClick={() => setPage(page-1)} disabled={page===1}>
+            Previous
+          </button>
+          {numbers.map(number => (
+            <button onClick={() =>setPage(number)}>{number}</button>
+          ))}
+          <button onClick={() => setPage(page+1)} disabled={page===lastPage}>
+            Next
+          </button>
+      </div>
+      <h4>Page: {page}</h4>
       <div className='row'>
-          {location.residents?.map(location => (
+          {peoplePaginated?.map(location => (
           <ResidentInfo location={location} key={location.url}/>
                 ))}
       </div>
